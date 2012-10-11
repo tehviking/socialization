@@ -25,7 +25,7 @@ module Socialization
 
       def followers(klass)
         klass = klass.to_s.singularize.camelize.constantize unless klass.is_a?(Class)
-        klass.joins("INNER JOIN follows ON follows.follower_id = #{klass.to_s.tableize}.id AND follows.follower_type = '#{klass.to_s}'").
+        klass.joins("INNER JOIN follows ON follows.follower_id = #{klass.name.demodulize.to_s.tableize}.id AND follows.follower_type = '#{klass.to_s}'").
               where("follows.followable_type = '#{self.class.to_s}'").
               where("follows.followable_id   =  #{self.id}")
       end

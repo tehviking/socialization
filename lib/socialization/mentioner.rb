@@ -39,7 +39,7 @@ module Socialization
 
       def mentionees(klass)
         klass = klass.to_s.singularize.camelize.constantize unless klass.is_a?(Class)
-        klass.joins("INNER JOIN mentions ON mentions.mentionable_id = #{klass.to_s.tableize}.id AND mentions.mentionable_type = '#{klass.to_s}'").
+        klass.joins("INNER JOIN mentions ON mentions.mentionable_id = #{klass.name.demodulize.to_s.tableize}.id AND mentions.mentionable_type = '#{klass.to_s}'").
               where("mentions.mentioner_type = '#{self.class.to_s}'").
               where("mentions.mentioner_id   =  #{self.id}")
       end

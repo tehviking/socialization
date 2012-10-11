@@ -25,7 +25,7 @@ module Socialization
 
       def likers(klass)
         klass = klass.to_s.singularize.camelize.constantize unless klass.is_a?(Class)
-        klass.joins("INNER JOIN likes ON likes.liker_id = #{klass.to_s.tableize}.id AND likes.liker_type = '#{klass.to_s}'").
+        klass.joins("INNER JOIN likes ON likes.liker_id = #{klass.name.demodulize.to_s.tableize}.id AND likes.liker_type = '#{klass.to_s}'").
               where("likes.likeable_type = '#{self.class.to_s}'").
               where("likes.likeable_id   =  #{self.id}")
       end
